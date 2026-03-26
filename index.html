@@ -46,7 +46,6 @@
             transition: all 0.3s ease; 
         }
 
-        /* Enhanced Village Cards with Animation 2 on Hover */
         .village-card {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -72,13 +71,33 @@
 
         .text-glow { text-shadow: 0 0 15px rgba(0, 245, 212, 0.7); }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #ff007f; border-radius: 10px; }
+        /* Modal Animation */
+        #activation-modal {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #activation-modal.active {
+            display: flex;
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="flex">
+
+    <div id="activation-modal" class="fixed inset-0 z-[100] items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6">
+        <div class="glass max-w-lg w-full p-12 rounded-[3rem] text-center border-t-4 border-pink-500 shadow-2xl relative overflow-hidden">
+            <div class="neon-sunset absolute top-0 left-0 w-full h-1"></div>
+            <i class="fa-solid fa-satellite-dish text-6xl text-pink-500 mb-8 animate-pulse"></i>
+            <h3 id="modal-title" class="text-4xl font-black uppercase italic mb-4">Initializing Node</h3>
+            <p id="modal-desc" class="text-slate-400 mb-8 italic">Securing Digital Public Infrastructure connection to the island delta...</p>
+            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden mb-10">
+                <div id="modal-progress" class="neon-sunset h-full w-0 transition-all duration-[2000ms]"></div>
+            </div>
+            <button onclick="closeModal()" class="px-8 py-3 bg-white/10 rounded-xl font-black uppercase text-xs hover:bg-white/20 transition">Abort Sync</button>
+        </div>
+    </div>
 
     <nav class="fixed left-0 top-0 h-screen w-80 glass border-r border-white/10 z-50 p-10 flex flex-col justify-between">
         <div>
@@ -89,22 +108,19 @@
                 <li><a href="#kinnakeet" class="nav-link flex items-center gap-4 text-orange-400"><i class="fa-solid fa-lighthouse"></i> Kinnakeet</a></li>
                 <li><a href="#cape" class="nav-link flex items-center gap-4 text-pink-500"><i class="fa-solid fa-compass"></i> The Cape</a></li>
                 <li><a href="#sovereign" class="nav-link flex items-center gap-4 text-teal-400"><i class="fa-solid fa-crown"></i> Sovereign</a></li>
-                <li><a href="#heritage" class="nav-link flex items-center gap-4 text-white/50"><i class="fa-solid fa-book-skull"></i> Heritage</a></li>
             </ul>
         </div>
-        <button class="buy-trigger neon-sunset py-5 rounded-2xl font-black uppercase text-xs shadow-2xl hover:scale-105 transition-all text-slate-950">Activate AI Now</button>
+        <button onclick="openModal('Full Island Access', 'Connecting all nodes from Rodanthe to Hatteras Village...')" class="neon-sunset py-5 rounded-2xl font-black uppercase text-xs shadow-2xl hover:scale-105 transition-all text-slate-950">Activate AI Now</button>
     </nav>
 
     <main class="ml-80 w-full">
 
         <header id="hero" class="min-h-screen neon-sunset flex items-center justify-center relative p-20 overflow-hidden">
             <div class="absolute inset-0 bg-slate-950/50"></div>
-            <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40" alt="Hatteras Lighthouse">
-            
             <div class="relative z-10 text-center max-w-5xl">
                 <span class="bg-white/10 px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.4em] border border-white/20 mb-8 inline-block">Digital Public Infrastructure [3]</span>
                 <h1 class="text-[9rem] font-black leading-none uppercase italic tracking-tighter mb-8 text-glow">Hatteras<br><span class="text-cyan-300">Sovereign</span></h1>
-                <p class="text-3xl font-bold italic mb-12">Own the AI Ocean. From Rodanthe to Hatteras Village, we are building the Digital Delta at GPTSpeed [4, 5].</p>
+                <p class="text-3xl font-bold italic mb-12">Own the AI Ocean. From Rodanthe to Hatteras Village, we are building the Digital Delta at GPTSpeed.</p>
                 <div class="flex justify-center gap-8">
                     <a href="#tri-villages" class="bg-white text-slate-900 px-12 py-6 rounded-2xl font-black text-2xl uppercase italic hover:scale-110 transition shadow-xl">Start at the Bridge</a>
                 </div>
@@ -115,55 +131,27 @@
             <div class="flex flex-col lg:flex-row gap-20 items-center">
                 <div class="lg:w-1/2">
                     <h2 class="text-7xl font-black uppercase italic mb-8">The <span class="text-pink-500">Tri-Village</span> Hub</h2>
-                    <p class="text-2xl text-slate-400 mb-10 leading-relaxed italic">The entry to the island. Rodanthe, Waves, and Salvo history combined with **Navigator** power [6, 7].</p>
                     <div class="glass p-10 rounded-[2.5rem] village-card border-t-8 border-pink-500 relative z-10">
                         <div class="text-5xl font-black mb-4">$499<span class="text-sm font-normal">/mo</span></div>
                         <ul class="space-y-4 text-xs font-black uppercase tracking-widest text-slate-300 mb-8">
                             <li><i class="fa-solid fa-bolt text-teal-400"></i> 50,000 AI Workflow Runs</li>
                             <li><i class="fa-solid fa-users text-pink-500"></i> 5 Island Seats</li>
-                            <li><i class="fa-solid fa-key text-orange-500"></i> Full API Access</li>
                         </ul>
-                        <button class="buy-trigger w-full bg-pink-500 py-4 rounded-xl font-black uppercase hover:bg-pink-400 transition-colors">Select Tier</button>
+                        <button onclick="openModal('Tri-Village Hub', 'Provisioning Rodanthe, Waves, and Salvo nodes...')" class="w-full bg-pink-500 py-4 rounded-xl font-black uppercase hover:bg-pink-400 transition-colors">Select Tier</button>
                     </div>
                 </div>
                 <div class="lg:w-1/2">
-                    <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&q=80&w=1000" class="rounded-[4rem] shadow-2xl grayscale hover:grayscale-0 transition duration-1000 border-4 border-pink-500/20" alt="Rodanthe Beach Houses">
+                    <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&q=80&w=1000" class="rounded-[4rem] shadow-2xl border-4 border-pink-500/20" alt="Island">
                 </div>
             </div>
         </section>
 
         <section id="kinnakeet" class="py-40 px-20 bg-slate-900">
-            <div class="max-w-7xl mx-auto text-center">
-                <h2 class="text-8xl font-black uppercase italic mb-8 text-glow">Avon: <span class="text-orange-400">Kinnakeet</span></h2>
-                <p class="text-2xl text-slate-400 mb-20 italic">Scaling through the heart of the island. Advanced neural processing for growing crews [7, 8].</p>
-                <div class="glass p-20 rounded-[4rem] village-card border-t-8 border-orange-500 max-w-4xl mx-auto">
-                    <h3 class="text-4xl font-black uppercase mb-6 italic">The Lighthouse Tier</h3>
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-7xl font-black uppercase italic mb-8">Avon: <span class="text-orange-400">Kinnakeet</span></h2>
+                <div class="glass p-20 rounded-[4rem] village-card border-t-8 border-orange-500">
                     <div class="text-6xl font-black mb-10 text-orange-500">$1,299<span class="text-xl font-normal text-white">/mo</span></div>
-                    <p class="text-lg text-slate-400 mb-10">Includes **250,000 AI workflow runs** and **Priority Line Processing** so your data never gets stuck in the sound [7].</p>
-                    <button class="buy-trigger bg-orange-500 text-slate-950 px-12 py-5 rounded-full font-black uppercase text-sm hover:scale-105 transition">Deploy Kinnakeet Infra</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="cape" class="py-40 px-20 bg-slate-950">
-            <div class="flex flex-col lg:flex-row-reverse gap-20 items-center">
-                <div class="lg:w-1/2">
-                    <h2 class="text-7xl font-black uppercase italic mb-8">Buxton: <span class="text-cyan-400">Cape Point</span></h2>
-                    <p class="text-2xl text-slate-300 mb-10 leading-relaxed font-bold">The $3,499 Scale Tier. Where the currents meet [6, 9].</p>
-                    <div class="space-y-6">
-                        <div class="glass p-8 rounded-3xl border-l-4 border-cyan-400 village-card">
-                            <h4 class="font-black uppercase text-sm italic">Dedicated Infrastructure</h4>
-                            <p class="text-xs text-slate-500">Sovereign cloud power for high-volume networks [8].</p>
-                        </div>
-                        <div class="glass p-8 rounded-3xl border-l-4 border-pink-400 village-card">
-                            <h4 class="font-black uppercase text-sm italic">Unlimited Seats</h4>
-                            <p class="text-xs text-slate-500">Every member of your crew on the same dash [9].</p>
-                        </div>
-                    </div>
-                    <button class="buy-trigger mt-10 w-full neon-sunset py-6 rounded-2xl font-black uppercase italic text-slate-950 shadow-lg">Establish Cape Connection</button>
-                </div>
-                <div class="lg:w-1/2">
-                    <img src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?auto=format&fit=crop&q=80&w=1000" class="rounded-[4rem] border-4 border-cyan-400 shadow-[0_0_60px_rgba(34,211,238,0.2)]" alt="Cape Point">
+                    <button onclick="openModal('Kinnakeet Station', 'Calibrating Avon neural processing clusters...')" class="bg-orange-500 text-slate-950 px-12 py-5 rounded-full font-black uppercase text-sm hover:scale-105 transition">Deploy Kinnakeet Infra</button>
                 </div>
             </div>
         </section>
@@ -173,61 +161,39 @@
             <div class="relative z-10 text-center max-w-4xl mx-auto">
                 <h2 class="text-9xl font-black uppercase italic tracking-tighter mb-10 text-glow">The Island Legend</h2>
                 <div class="text-5xl font-black text-teal-400 mb-10">$7,999<span class="text-xl font-normal text-white">/mo</span></div>
-                <p class="text-2xl font-bold mb-16 italic">Hatteras Village Edition. Unlimited runs, on-premise deployment, and a dedicated island success manager [9, 10].</p>
-                <button class="buy-trigger bg-teal-400 text-slate-950 px-20 py-8 rounded-2xl font-black text-2xl uppercase italic shadow-[0_0_50px_rgba(20,184,166,0.5)] hover:scale-110 transition-transform">Claim the Village</button>
-            </div>
-        </section>
-
-        <section id="heritage" class="py-40 px-20 bg-slate-950 border-t border-white/5">
-            <div class="max-w-5xl mx-auto">
-                <h2 class="text-6xl font-black uppercase italic mb-16 text-center">Hatteras <span class="text-slate-500">Heritage Archive</span></h2>
-                <div class="grid md:grid-cols-2 gap-10">
-                    <div class="glass p-10 rounded-[3rem] village-card">
-                        <h3 class="text-2xl font-black mb-6 uppercase text-pink-500">Salvo Sanctuary</h3>
-                        <p class="text-slate-400 italic leading-relaxed">Honoring **Johnny Bull Hooper** and the legendary "Diamond Shoals" history [History]. 25% of all district tax revenue is reinvested into local island schools and parks [9].</p>
-                    </div>
-                    <div class="glass p-10 rounded-[3rem] village-card">
-                        <h3 class="text-2xl font-black mb-6 uppercase text-teal-400">Island Fins</h3>
-                        <p class="text-slate-400 italic">Includes all 12+ industry modules: Non-Profit floor plans, MedTech guard, and E-Commerce shredders [11].</p>
-                    </div>
-                </div>
-                <div class="mt-20 pt-20 border-t border-white/5 text-center text-[10px] font-black uppercase tracking-[1em] text-slate-800">
-                    © 2026 Hatteras Nexus | Digital Public Infrastructure [12]
-                </div>
+                <button onclick="openModal('Sovereign Protocol', 'Deploying on-premise Hatteras Village core...')" class="bg-teal-400 text-slate-950 px-20 py-8 rounded-2xl font-black text-2xl uppercase italic shadow-2xl hover:scale-110 transition-transform">Claim the Village</button>
             </div>
         </section>
 
     </main>
 
     <script>
-        // Select all purchase buttons
-        const buyButtons = document.querySelectorAll('.buy-trigger');
+        function openModal(tier, desc) {
+            const modal = document.getElementById('activation-modal');
+            const progress = document.getElementById('modal-progress');
+            document.getElementById('modal-title').innerText = tier;
+            document.getElementById('modal-desc').innerText = desc;
+            
+            modal.classList.add('active');
+            
+            // Start progress bar animation
+            setTimeout(() => {
+                progress.style.width = '100%';
+            }, 100);
 
-        buyButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                // Visual feedback
-                button.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> Provisioning...";
-                button.style.pointerEvents = "none";
-                
-                // Simulate Connection to the "Sovereign" Infrastructure
-                setTimeout(() => {
-                    const tierName = button.closest('section')?.id.toUpperCase() || "NEXUS";
-                    alert(`Establishing Link to ${tierName}...\n\nDigital Public Infrastructure secured. Welcome to the Island.`);
-                    
-                    // Reset button
-                    button.innerHTML = "Access Granted";
-                    button.classList.add('bg-green-500');
-                    button.style.backgroundColor = "#22c55e";
-                }, 1500);
-            });
-        });
+            // Finish state
+            setTimeout(() => {
+                document.getElementById('modal-title').innerText = "Sync Complete";
+                document.getElementById('modal-desc').innerText = "Welcome to the Sovereign Network. Redirecting to terminal...";
+            }, 2100);
+        }
 
-        // Add smooth parallax-like scroll reveal
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            document.querySelector('#hero img').style.transform = `translateY(${scrolled * 0.5}px)`;
-        });
+        function closeModal() {
+            const modal = document.getElementById('activation-modal');
+            const progress = document.getElementById('modal-progress');
+            modal.classList.remove('active');
+            progress.style.width = '0%';
+        }
     </script>
-
 </body>
 </html>
