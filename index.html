@@ -21,7 +21,6 @@
             overflow-x: hidden;
         }
         
-        /* Animation 2: Neon Sunset Ripples */
         .neon-sunset { 
             background: var(--neon-gradient);
             background-size: 400% 400%;
@@ -40,160 +39,149 @@
             border: 1px solid rgba(255, 255, 255, 0.1); 
         }
 
-        .nav-link:hover { 
-            color: #00f5d4; 
-            transform: translateX(10px); 
-            transition: all 0.3s ease; 
-        }
-
         .village-card {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            overflow: hidden;
         }
 
         .village-card:hover { 
-            border-color: transparent;
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 0 50px rgba(255, 0, 127, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 0 50px rgba(255, 0, 127, 0.2);
         }
 
-        .village-card:hover::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--neon-gradient);
-            background-size: 400% 400%;
-            animation: ripple 6s ease infinite;
-            opacity: 0.15;
-            z-index: 0;
-        }
-
-        .text-glow { text-shadow: 0 0 15px rgba(0, 245, 212, 0.7); }
-
-        /* Modal Animation */
+        /* Modal Logic */
         #activation-modal {
             display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
         }
 
-        #activation-modal.active {
-            display: flex;
-            opacity: 1;
+        #activation-modal.active { display: flex; }
+
+        .scan-line {
+            width: 100%;
+            height: 2px;
+            background: #00f5d4;
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-shadow: 0 0 15px #00f5d4;
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
         }
     </style>
 </head>
 <body class="flex">
 
-    <div id="activation-modal" class="fixed inset-0 z-[100] items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6">
-        <div class="glass max-w-lg w-full p-12 rounded-[3rem] text-center border-t-4 border-pink-500 shadow-2xl relative overflow-hidden">
-            <div class="neon-sunset absolute top-0 left-0 w-full h-1"></div>
-            <i class="fa-solid fa-satellite-dish text-6xl text-pink-500 mb-8 animate-pulse"></i>
-            <h3 id="modal-title" class="text-4xl font-black uppercase italic mb-4">Initializing Node</h3>
-            <p id="modal-desc" class="text-slate-400 mb-8 italic">Securing Digital Public Infrastructure connection to the island delta...</p>
-            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden mb-10">
-                <div id="modal-progress" class="neon-sunset h-full w-0 transition-all duration-[2000ms]"></div>
+    <div id="activation-modal">
+        <div class="glass max-w-lg w-full p-10 rounded-[3rem] text-center border border-white/10 relative overflow-hidden shadow-2xl">
+            <div id="modal-scanner" class="scan-line hidden"></div>
+            
+            <div id="sync-ui">
+                <i class="fa-solid fa-tower-broadcast text-5xl text-cyan-400 mb-6 animate-pulse"></i>
+                <h3 id="modal-title" class="text-3xl font-black uppercase italic mb-2">Syncing Node</h3>
+                <p id="modal-desc" class="text-slate-400 mb-8 italic text-sm">Establishing encrypted link to Hatteras Digital Delta...</p>
+                <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden mb-6">
+                    <div id="modal-progress" class="neon-sunset h-full w-0 transition-all duration-[1500ms]"></div>
+                </div>
             </div>
-            <button onclick="closeModal()" class="px-8 py-3 bg-white/10 rounded-xl font-black uppercase text-xs hover:bg-white/20 transition">Abort Sync</button>
+
+            <div id="email-ui" class="hidden">
+                <h3 class="text-3xl font-black uppercase italic mb-2 text-pink-500">Node Identified</h3>
+                <p class="text-slate-400 mb-8 text-sm italic">Provide your digital signature (email) to finalize access.</p>
+                <form id="intake-form" class="space-y-4">
+                    <input type="email" required placeholder="name@sovereign.com" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-cyan-400 transition text-center font-bold">
+                    <button type="submit" class="w-full neon-sunset py-5 rounded-2xl font-black uppercase text-slate-950 hover:scale-105 transition">Finalize Connection</button>
+                </form>
+            </div>
+
+            <button onclick="closeModal()" class="mt-8 text-xs font-black uppercase tracking-widest text-white/30 hover:text-white transition">Abort Mission</button>
         </div>
     </div>
 
     <nav class="fixed left-0 top-0 h-screen w-80 glass border-r border-white/10 z-50 p-10 flex flex-col justify-between">
-        <div>
-            <div class="text-4xl font-black uppercase italic tracking-tighter mb-16 text-glow">Hatteras<br><span class="text-pink-500">Nexus</span></div>
-            <ul class="space-y-8 font-black uppercase tracking-widest text-sm">
-                <li><a href="#hero" class="nav-link flex items-center gap-4"><i class="fa-solid fa-anchor"></i> The Shoreline</a></li>
-                <li><a href="#tri-villages" class="nav-link flex items-center gap-4 text-cyan-400"><i class="fa-solid fa-house-flood-water"></i> Tri-Villages</a></li>
-                <li><a href="#kinnakeet" class="nav-link flex items-center gap-4 text-orange-400"><i class="fa-solid fa-lighthouse"></i> Kinnakeet</a></li>
-                <li><a href="#cape" class="nav-link flex items-center gap-4 text-pink-500"><i class="fa-solid fa-compass"></i> The Cape</a></li>
-                <li><a href="#sovereign" class="nav-link flex items-center gap-4 text-teal-400"><i class="fa-solid fa-crown"></i> Sovereign</a></li>
-            </ul>
-        </div>
-        <button onclick="openModal('Full Island Access', 'Connecting all nodes from Rodanthe to Hatteras Village...')" class="neon-sunset py-5 rounded-2xl font-black uppercase text-xs shadow-2xl hover:scale-105 transition-all text-slate-950">Activate AI Now</button>
+        <div class="text-4xl font-black uppercase italic tracking-tighter text-glow">Hatteras<br><span class="text-pink-500">Nexus</span></div>
+        <button onclick="triggerActivation('Global Access', 'All Island Nodes')" class="neon-sunset py-5 rounded-2xl font-black uppercase text-xs text-slate-950 shadow-2xl hover:scale-105 transition">Activate AI Now</button>
     </nav>
 
     <main class="ml-80 w-full">
-
-        <header id="hero" class="min-h-screen neon-sunset flex items-center justify-center relative p-20 overflow-hidden">
-            <div class="absolute inset-0 bg-slate-950/50"></div>
-            <div class="relative z-10 text-center max-w-5xl">
-                <span class="bg-white/10 px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.4em] border border-white/20 mb-8 inline-block">Digital Public Infrastructure [3]</span>
-                <h1 class="text-[9rem] font-black leading-none uppercase italic tracking-tighter mb-8 text-glow">Hatteras<br><span class="text-cyan-300">Sovereign</span></h1>
-                <p class="text-3xl font-bold italic mb-12">Own the AI Ocean. From Rodanthe to Hatteras Village, we are building the Digital Delta at GPTSpeed.</p>
-                <div class="flex justify-center gap-8">
-                    <a href="#tri-villages" class="bg-white text-slate-900 px-12 py-6 rounded-2xl font-black text-2xl uppercase italic hover:scale-110 transition shadow-xl">Start at the Bridge</a>
-                </div>
+        <header id="hero" class="min-h-screen neon-sunset flex items-center justify-center relative p-20">
+            <div class="absolute inset-0 bg-slate-950/40"></div>
+            <div class="relative z-10 text-center">
+                <h1 class="text-[8rem] font-black uppercase italic leading-none mb-8">Hatteras<br><span class="text-cyan-400">Sovereign</span></h1>
+                <p class="text-2xl italic mb-12">Building the Digital Delta at GPTSpeed.</p>
+                <a href="#tri-villages" class="bg-white text-slate-950 px-12 py-6 rounded-2xl font-black text-2xl uppercase italic">Start at the Bridge</a>
             </div>
         </header>
 
         <section id="tri-villages" class="py-40 px-20 bg-slate-950">
-            <div class="flex flex-col lg:flex-row gap-20 items-center">
-                <div class="lg:w-1/2">
-                    <h2 class="text-7xl font-black uppercase italic mb-8">The <span class="text-pink-500">Tri-Village</span> Hub</h2>
-                    <div class="glass p-10 rounded-[2.5rem] village-card border-t-8 border-pink-500 relative z-10">
-                        <div class="text-5xl font-black mb-4">$499<span class="text-sm font-normal">/mo</span></div>
-                        <ul class="space-y-4 text-xs font-black uppercase tracking-widest text-slate-300 mb-8">
-                            <li><i class="fa-solid fa-bolt text-teal-400"></i> 50,000 AI Workflow Runs</li>
-                            <li><i class="fa-solid fa-users text-pink-500"></i> 5 Island Seats</li>
-                        </ul>
-                        <button onclick="openModal('Tri-Village Hub', 'Provisioning Rodanthe, Waves, and Salvo nodes...')" class="w-full bg-pink-500 py-4 rounded-xl font-black uppercase hover:bg-pink-400 transition-colors">Select Tier</button>
-                    </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="glass p-10 rounded-[3rem] village-card border-t-4 border-pink-500">
+                    <h3 class="text-2xl font-black mb-2 italic">Tri-Village Hub</h3>
+                    <div class="text-4xl font-black mb-8 text-pink-500">$499<span class="text-sm font-normal">/mo</span></div>
+                    <button onclick="triggerActivation('Tri-Village Hub', '$499 Tier')" class="w-full py-4 bg-white/5 rounded-xl font-black uppercase hover:bg-white/10 transition">Buy Node</button>
                 </div>
-                <div class="lg:w-1/2">
-                    <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&q=80&w=1000" class="rounded-[4rem] shadow-2xl border-4 border-pink-500/20" alt="Island">
+                <div class="glass p-10 rounded-[3rem] village-card border-t-4 border-orange-500">
+                    <h3 class="text-2xl font-black mb-2 italic">Kinnakeet</h3>
+                    <div class="text-4xl font-black mb-8 text-orange-500">$1,299<span class="text-sm font-normal">/mo</span></div>
+                    <button onclick="triggerActivation('Kinnakeet Station', '$1,299 Tier')" class="w-full py-4 bg-white/5 rounded-xl font-black uppercase hover:bg-white/10 transition">Deploy Node</button>
                 </div>
-            </div>
-        </section>
-
-        <section id="kinnakeet" class="py-40 px-20 bg-slate-900">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-7xl font-black uppercase italic mb-8">Avon: <span class="text-orange-400">Kinnakeet</span></h2>
-                <div class="glass p-20 rounded-[4rem] village-card border-t-8 border-orange-500">
-                    <div class="text-6xl font-black mb-10 text-orange-500">$1,299<span class="text-xl font-normal text-white">/mo</span></div>
-                    <button onclick="openModal('Kinnakeet Station', 'Calibrating Avon neural processing clusters...')" class="bg-orange-500 text-slate-950 px-12 py-5 rounded-full font-black uppercase text-sm hover:scale-105 transition">Deploy Kinnakeet Infra</button>
+                <div class="glass p-10 rounded-[3rem] village-card border-t-4 border-teal-400">
+                    <h3 class="text-2xl font-black mb-2 italic">Sovereign</h3>
+                    <div class="text-4xl font-black mb-8 text-teal-400">$7,999<span class="text-sm font-normal">/mo</span></div>
+                    <button onclick="triggerActivation('Hatteras Sovereign', '$7,999 Tier')" class="w-full py-4 bg-white/5 rounded-xl font-black uppercase hover:bg-white/10 transition">Claim Node</button>
                 </div>
             </div>
         </section>
-
-        <section id="sovereign" class="py-60 px-20 neon-sunset relative">
-            <div class="absolute inset-0 bg-slate-950/80"></div>
-            <div class="relative z-10 text-center max-w-4xl mx-auto">
-                <h2 class="text-9xl font-black uppercase italic tracking-tighter mb-10 text-glow">The Island Legend</h2>
-                <div class="text-5xl font-black text-teal-400 mb-10">$7,999<span class="text-xl font-normal text-white">/mo</span></div>
-                <button onclick="openModal('Sovereign Protocol', 'Deploying on-premise Hatteras Village core...')" class="bg-teal-400 text-slate-950 px-20 py-8 rounded-2xl font-black text-2xl uppercase italic shadow-2xl hover:scale-110 transition-transform">Claim the Village</button>
-            </div>
-        </section>
-
     </main>
 
     <script>
-        function openModal(tier, desc) {
+        function triggerActivation(tier, price) {
             const modal = document.getElementById('activation-modal');
+            const syncUI = document.getElementById('sync-ui');
+            const emailUI = document.getElementById('email-ui');
             const progress = document.getElementById('modal-progress');
-            document.getElementById('modal-title').innerText = tier;
-            document.getElementById('modal-desc').innerText = desc;
-            
-            modal.classList.add('active');
-            
-            // Start progress bar animation
-            setTimeout(() => {
-                progress.style.width = '100%';
-            }, 100);
+            const scanner = document.getElementById('modal-scanner');
 
-            // Finish state
+            // Reset UI
+            modal.classList.add('active');
+            syncUI.classList.remove('hidden');
+            emailUI.classList.add('hidden');
+            scanner.classList.remove('hidden');
+            progress.style.width = '0%';
+            
+            document.getElementById('modal-title').innerText = `Syncing ${tier}`;
+
+            // Animate progress
+            setTimeout(() => { progress.style.width = '100%'; }, 100);
+
+            // Switch to Email Intake after "syncing"
             setTimeout(() => {
-                document.getElementById('modal-title').innerText = "Sync Complete";
-                document.getElementById('modal-desc').innerText = "Welcome to the Sovereign Network. Redirecting to terminal...";
-            }, 2100);
+                syncUI.classList.add('hidden');
+                scanner.classList.add('hidden');
+                emailUI.classList.remove('hidden');
+            }, 1600);
         }
 
         function closeModal() {
-            const modal = document.getElementById('activation-modal');
-            const progress = document.getElementById('modal-progress');
-            modal.classList.remove('active');
-            progress.style.width = '0%';
+            document.getElementById('activation-modal').classList.remove('active');
         }
+
+        document.getElementById('intake-form').onsubmit = (e) => {
+            e.preventDefault();
+            const email = e.target.querySelector('input').value;
+            alert(`Sovereign access granted to: ${email}\nWelcome to the Nexus.`);
+            closeModal();
+        };
     </script>
 </body>
 </html>
