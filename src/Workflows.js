@@ -1,30 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { GitBranch, Terminal, ShieldAlert } from 'lucide-react';
+import { Zap, Activity, Repeat } from 'lucide-react';
 
 const Workflows = () => {
+  const flows = [
+    { title: "Lead Ingestion", phase: "Pre-Purchase", status: "Active", logic: "AI Chat -> Qualification -> Calendly" },
+    { title: "Ticket Resolution", phase: "Service", status: "Optimizing", logic: "Routing -> Agent Copilot -> FAQ" },
+    { title: "Retention Loop", phase: "Post-Resolution", status: "Deploying", logic: "Survey -> Churn Detection -> Upsell" }
+  ];
+
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-8">
-      <div className="max-w-5xl mx-auto">
-        <Link to="/" className="text-slate-500 hover:text-emerald-400 transition-colors uppercase tracking-widest text-xs font-bold">← Back to Hub</Link>
-        
-        <div className="mt-16 flex flex-col md:flex-row gap-12 items-start">
-          <div className="flex-1">
-            <h1 className="text-5xl md:text-7xl font-black italic tracking-tighter uppercase mb-8 leading-none">Strategic<br/><span className="text-emerald-500">Workflows</span></h1>
-            <p className="text-slate-500 mb-8 border-l-2 border-emerald-500/30 pl-6 italic">Mapping the trajectory of AI-integrated systems for Ocean Tide Drop AI Solutions.</p>
-            
-            <div className="space-y-4">
-              {['Data Synthesis', 'Neural Logic Mapping', 'Edge Deployment'].map((item, i) => (
-                <div key={i} className="flex items-center gap-4 p-4 bg-white/5 rounded-lg border border-white/5">
-                  <Terminal size={16} className="text-emerald-500" />
-                  <span className="text-xs font-mono uppercase tracking-widest">{item}</span>
-                  <div className="ml-auto h-[1px] flex-1 bg-emerald-500/20 mx-4" />
-                  <span className="text-[10px] text-emerald-500 font-bold">ACTIVE</span>
-                </div>
-              ))}
+    <div className="min-h-screen bg-slate-950 text-white p-12">
+      <h1 className="text-4xl font-black italic uppercase mb-12 text-emerald-400">Active Workflows</h1>
+      <div className="space-y-6 max-w-4xl">
+        {flows.map((flow, i) => (
+          <div key={i} className="bg-slate-900/60 border-l-4 border-emerald-500 p-8 rounded-r-3xl flex justify-between items-center">
+            <div>
+              <div className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">{flow.phase}</div>
+              <h2 className="text-2xl font-bold italic">{flow.title}</h2>
+              <p className="text-slate-500 font-mono text-xs mt-2">{flow.logic}</p>
+            </div>
+            <div className="flex items-center gap-2 bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20">
+              <Activity size={14} className="text-emerald-400" />
+              <span className="text-[10px] font-black uppercase tracking-tighter text-emerald-400">{flow.status}</span>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
