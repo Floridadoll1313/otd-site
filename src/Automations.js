@@ -1,33 +1,34 @@
 import React from 'react';
-import { Zap, Activity, Repeat } from 'lucide-react';
+import { Activity, Radio, Workflow } from 'lucide-react';
 
-const Workflows = () => {
-  const flows = [
-    { title: "Lead Ingestion", phase: "Pre-Purchase", status: "Active", logic: "AI Chat -> Qualification -> Calendly" },
-    { title: "Ticket Resolution", phase: "Service", status: "Optimizing", logic: "Routing -> Agent Copilot -> FAQ" },
-    { title: "Retention Loop", phase: "Post-Resolution", status: "Deploying", logic: "Survey -> Churn Detection -> Upsell" }
+const Automations = () => {
+  const logs = [
+    { time: "14:02:01", action: "Lead Captured", system: "Phase 1" },
+    { time: "14:05:44", action: "Ticket Routed", system: "Phase 2" },
+    { time: "14:10:12", action: "Survey Dispatched", system: "Phase 3" }
   ];
 
   return (
     <div className="min-h-screen bg-slate-950 text-white p-12">
-      <h1 className="text-4xl font-black italic uppercase mb-12 text-emerald-400">Active Workflows</h1>
-      <div className="space-y-6 max-w-4xl">
-        {flows.map((flow, i) => (
-          <div key={i} className="bg-slate-900/60 border-l-4 border-emerald-500 p-8 rounded-r-3xl flex justify-between items-center">
-            <div>
-              <div className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">{flow.phase}</div>
-              <h2 className="text-2xl font-bold italic">{flow.title}</h2>
-              <p className="text-slate-500 font-mono text-xs mt-2">{flow.logic}</p>
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-black italic uppercase mb-2">Automation Matrix</h1>
+        <p className="text-emerald-500 font-mono text-[10px] uppercase mb-12 tracking-[0.3em]">// LIVE SYSTEM FEED</p>
+        
+        <div className="bg-slate-900 rounded-[2.5rem] border border-slate-800 overflow-hidden">
+          {logs.map((log, i) => (
+            <div key={i} className="flex items-center gap-6 p-6 border-b border-slate-800 last:border-0 hover:bg-emerald-500/5 transition-colors">
+              <span className="font-mono text-emerald-500 text-xs">{log.time}</span>
+              <Workflow size={16} className="text-slate-600" />
+              <div className="flex-grow">
+                <span className="font-black italic uppercase text-sm tracking-tight">{log.action}</span>
+              </div>
+              <span className="text-[10px] font-mono text-slate-500">{log.system}</span>
             </div>
-            <div className="flex items-center gap-2 bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20">
-              <Activity size={14} className="text-emerald-400" />
-              <span className="text-[10px] font-black uppercase tracking-tighter text-emerald-400">{flow.status}</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-export default Workflows;
+export default Automations;
