@@ -1,3 +1,7 @@
+import WebBuilds from './WebBuilds';
+import GameBuilds from './GameBuilds';
+import Workflows from './Workflows';
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
