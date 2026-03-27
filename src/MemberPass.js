@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, Unlock, Download, Zap } from 'lucide-react';
+import { Lock, Unlock, Zap } from 'lucide-react';
 
 const MemberPass = () => {
   const [accessCode, setAccessCode] = useState('');
