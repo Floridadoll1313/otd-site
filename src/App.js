@@ -2,7 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Globe, Zap, Database, Gamepad2, Bot, Lock } from 'lucide-react';
 
-// --- INTEGRATED PAGES (Prevents "Module Not Found" Errors) ---
+// 1. IMPORT YOUR NEW PAGES
+import WebBuilds from './WebBuilds';
+import GameBuilds from './GameBuilds';
+import Workflows from './Workflows';
+import Automations from './Automations';
+import Vault from './Vault';
+
 const Home = () => (
   <div className="min-h-screen bg-black text-white p-8 font-sans selection:bg-cyan-500/30">
     <div className="max-w-6xl mx-auto">
@@ -12,6 +18,7 @@ const Home = () => (
         </h1>
         <p className="text-xl md:text-2xl text-cyan-400 font-light tracking-[0.2em] uppercase italic">Digital Ecosystem Architect</p>
       </header>
+
       <nav className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[
           { name: "Web Builds", path: "/web", color: "from-cyan-500/20", icon: <Globe /> },
@@ -27,29 +34,25 @@ const Home = () => (
           </Link>
         ))}
       </nav>
+      
+      <footer className="mt-32 pt-8 border-t border-white/5 flex justify-between items-center text-[10px] tracking-[0.3em] uppercase text-slate-600 font-bold">
+        <span>© 2026 Ocean Tide Drop</span>
+        <span className="text-cyan-900">Status: Optimized</span>
+      </footer>
     </div>
   </div>
 );
 
-const PageTemplate = ({ title, color }) => (
-  <div className="min-h-screen bg-black text-white p-20 flex flex-col items-center justify-center">
-    <h1 className={`text-6xl font-black italic mb-4 uppercase ${color}`}>{title}</h1>
-    <p className="text-slate-500 mb-12 uppercase tracking-widest animate-pulse">System Protocols: Online</p>
-    <Link to="/" className="text-sm font-bold border-b border-white/10 pb-1 hover:text-cyan-400 transition-colors">← RETURN TO HUB</Link>
-  </div>
-);
-
-// --- MAIN APP COMPONENT ---
 export default function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/web" element={<PageTemplate title="Web Systems" color="text-cyan-400" />} />
-        <Route path="/games" element={<PageTemplate title="Game Logic" color="text-purple-400" />} />
-        <Route path="/flows" element={<PageTemplate title="Workflows" color="text-emerald-400" />} />
-        <Route path="/auto" element={<PageTemplate title="Automations" color="text-orange-400" />} />
-        <Route path="/vault" element={<PageTemplate title="The Vault" color="text-red-400" />} />
+        <Route path="/web" element={<WebBuilds />} />
+        <Route path="/games" element={<GameBuilds />} />
+        <Route path="/flows" element={<Workflows />} />
+        <Route path="/auto" element={<Automations />} />
+        <Route path="/vault" element={<Vault />} />
       </Routes>
     </Router>
   );
