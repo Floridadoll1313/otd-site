@@ -28,14 +28,14 @@ const LeadSniper = () => {
           <ArrowLeft size={14} /> Back to Vault
         </Link>
         <div className="bg-slate-900/40 border border-emerald-500/20 rounded-[3rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
-          <h1 className="text-4xl font-black italic uppercase tracking-tighter mb-2 text-center md:text-left">Lead Sniper V1.0</h1>
+          <h1 className="text-4xl font-black italic uppercase tracking-tighter mb-2">Lead Sniper V1.0</h1>
           <div className="flex flex-col md:flex-row gap-4 mb-12 mt-8">
             <input 
               type="text" 
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Target Niche..." 
-              className="flex-grow bg-slate-950 border border-slate-800 p-5 rounded-2xl outline-none focus:border-emerald-500/50 transition-all font-mono text-sm"
+              className="flex-grow bg-slate-950 border border-slate-800 p-5 rounded-2xl outline-none focus:border-emerald-500/50 transition-all font-mono text-sm text-white"
             />
             <button onClick={startScan} disabled={isScanning} className="bg-emerald-600 hover:bg-emerald-400 px-8 py-5 rounded-2xl font-black uppercase tracking-widest transition-all disabled:opacity-50">
               {isScanning ? "Scanning..." : "Start Sniper"}
