@@ -1,3 +1,4 @@
+Automations.js 
 Automations.js
 import React from 'react';
 import { Zap, CheckCircle, ArrowLeft, DollarSign } from 'lucide-react';
