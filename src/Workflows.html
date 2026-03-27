@@ -1,0 +1,45 @@
+Workflows.js
+import React from 'react';
+import { Share2, Repeat, Target, ArrowLeft, TrendingUp } from 'lucide-react';
+
+const Workflows = () => {
+  const workflows = [
+    { title: "Content Multiplier", desc: "Turn 1 YouTube video into 10 TikToks, 5 Tweets, and a Blog post automatically.", price: "$2,000 Setup" },
+    { title: "The 'Omni-Channel' Outreach", desc: "Sequenced touches across Email, LinkedIn, and Twitter DM.", price: "$1,800 Setup" },
+    { title: "Auto-Review Engine", desc: "Automatically triggers Google review requests after a successful sale.", price: "$900 Setup" },
+    { title: "Newsletter Autopilot", desc: "Curates industry news and drafts your weekly newsletter using AI.", price: "$1,500 Setup" }
+  ];
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-white p-8 font-sans">
+      <div className="max-w-4xl mx-auto">
+        <button onClick={() => window.location.href = '/'} className="flex items-center gap-2 text-blue-400 mb-8 hover:text-white transition-colors">
+          <ArrowLeft size={20} /> Back to Hub
+        </button>
+
+        <div className="mb-12 text-left">
+          <h1 className="text-6xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 uppercase">
+            Strategic Workflows
+          </h1>
+          <p className="text-slate-400 mt-4 text-lg">Infrastructure for infinite scale.</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {workflows.map((w, i) => (
+            <div key={i} className="bg-slate-900/40 border border-cyan-500/10 p-8 rounded-3xl hover:bg-slate-900/60 transition-all border-l-4 border-l-cyan-500">
+              <div className="flex justify-between items-start mb-4">
+                <Share2 className="text-cyan-400" />
+                <span className="text-xs font-black bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full uppercase tracking-widest">High ROI</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-2 italic tracking-tight">{w.title}</h3>
+              <p className="text-slate-400 text-sm mb-6 leading-relaxed">{w.desc}</p>
+              <div className="text-xl font-black text-white">{w.price}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Workflows;
