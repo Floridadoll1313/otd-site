@@ -1,59 +1,89 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Globe, Zap, Database, Gamepad2, Bot, Lock } from 'lucide-react';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 
-// 1. IMPORT YOUR NEW PAGES
-import WebBuilds from './WebBuilds';
-import GameBuilds from './GameBuilds';
-import Workflows from './Workflows';
-import Automations from './Automations';
-import Vault from './Vault';
+// --- 1. PLACEHOLDER PAGES (Replace these with your actual files later) ---
+const Home = () => <div className="p-20 text-white"><h1>Home Terminal</h1><p>System Online...</p></div>;
+const WebBuilds = () => <div className="p-20 text-white"><h1>Web Builds</h1><p>Deploying protocols...</p></div>;
+const GameBuilds = () => <div className="p-20 text-white"><h1>Game Engine</h1><p>Loading assets...</p></div>;
+const Workflows = () => <div className="p-20 text-white"><h1>Workflows</h1><p>Automating tasks...</p></div>;
+const Automations = () => <div className="p-20 text-white"><h1>Automations</h1><p>Running scripts...</p></div>;
+const Vault = () => <div className="p-20 text-cyan-400"><h1>The Vault</h1><p>Encrypted Data Access Required.</p></div>;
+const MarketInsights = () => <div className="p-20 text-white"><h1>Market Insights</h1><p>Analyzing trends...</p></div>;
+const BookingForm = () => <div className="p-20 text-white"><h1>Booking</h1><p>Schedule a sync...</p></div>;
 
-const Home = () => (
-  <div className="min-h-screen bg-black text-white p-8 font-sans selection:bg-cyan-500/30">
-    <div className="max-w-6xl mx-auto">
-      <header className="mb-20 mt-12">
-        <h1 className="text-7xl md:text-9xl font-black italic tracking-tighter mb-4 bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500 animate-sea-pulse leading-none">
-          OTD AI SURFER
-        </h1>
-        <p className="text-xl md:text-2xl text-cyan-400 font-light tracking-[0.2em] uppercase italic">Digital Ecosystem Architect</p>
-      </header>
+// --- 2. THE SYSTEM DOCK COMPONENT ---
+const SystemDock = () => {
+  const location = useLocation();
+  
+  const navItems = [
+    { name: 'Home', path: '/', icon: '⌂' },
+    { name: 'Web', path: '/web', icon: '🌐' },
+    { name: 'Games', path: '/games', icon: '🎮' },
+    { name: 'Flows', path: '/flows', icon: '⚡' },
+    { name: 'Vault', path: '/vault', icon: '🔒' },
+  ];
 
-      <nav className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[
-          { name: "Web Builds", path: "/web", color: "from-cyan-500/20", icon: <Globe /> },
-          { name: "Game Builds", path: "/games", color: "from-purple-500/20", icon: <Gamepad2 /> },
-          { name: "Workflows", path: "/flows", color: "from-emerald-500/20", icon: <Database /> },
-          { name: "Automations", path: "/auto", color: "from-orange-500/20", icon: <Bot /> },
-          { name: "The Vault", path: "/vault", color: "from-red-500/20", icon: <Lock /> }
-        ].map((item) => (
-          <Link key={item.path} to={item.path} className="group relative p-10 bg-slate-900/40 border border-white/5 rounded-3xl overflow-hidden transition-all duration-500 hover:border-white/20 hover:-translate-y-2">
-            <div className={`absolute inset-0 bg-gradient-to-br ${item.color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-            <div className="relative z-10 text-cyan-500 mb-4 group-hover:scale-110 transition-transform">{item.icon}</div>
-            <span className="relative z-10 text-2xl font-bold tracking-tight group-hover:text-cyan-400 transition-colors uppercase italic">{item.name}</span>
-          </Link>
-        ))}
+  return (
+    <div className="fixed bottom-8 left-1/2 z-50 -translate-x-1/2">
+      <nav className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 p-2 backdrop-blur-xl shadow-2xl">
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`relative flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300 hover:bg-white/10 ${
+                isActive ? 'bg-white/20 text-white scale-110' : 'text-gray-500'
+              }`}
+            >
+              <span className="text-xl">{item.icon}</span>
+              {isActive && (
+                <span className="absolute -bottom-1 h-1 w-1 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee]" />
+              )}
+            </Link>
+          );
+        })}
       </nav>
-      
-      <footer className="mt-32 pt-8 border-t border-white/5 flex justify-between items-center text-[10px] tracking-[0.3em] uppercase text-slate-600 font-bold">
-        <span>© 2026 Ocean Tide Drop</span>
-        <span className="text-cyan-900">Status: Optimized</span>
-      </footer>
     </div>
-  </div>
-);
+  );
+};
 
+// --- 3. THE MAIN APP ASSEMBLY ---
 export default function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/web" element={<WebBuilds />} />
-        <Route path="/games" element={<GameBuilds />} />
-        <Route path="/flows" element={<Workflows />} />
-        <Route path="/auto" element={<Automations />} />
-        <Route path="/vault" element={<Vault />} />
-      </Routes>
+      <div className="relative min-h-screen w-full bg-black overflow-hidden font-sans selection:bg-cyan-500/30">
+        
+        {/* GLOBAL NAVIGATION (Persists across routes) */}
+        <SystemDock />
+
+        {/* CONTENT AREA */}
+        <main className="relative z-10 min-h-screen">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/web" element={<WebBuilds />} />
+            <Route path="/games" element={<GameBuilds />} />
+            <Route path="/flows" element={<Workflows />} />
+            <Route path="/auto" element={<Automations />} />
+            <Route path="/vault" element={<Vault />} />
+            <Route path="/insights" element={<MarketInsights />} />
+            <Route path="/book" element={<BookingForm />} />
+          </Routes>
+        </main>
+
+        {/* CRT SCANLINE & VFX OVERLAY */}
+        <div className="pointer-events-none fixed inset-0 z-[60]">
+          {/* Grid/Scanline lines */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.15)_50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03))] bg-[length:100%_3px,3px_100%]" />
+          
+          {/* Subtle vignette for depth */}
+          <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.7)]" />
+          
+          {/* Global Ambient Glow */}
+          <div className="absolute top-[-10%] left-[-10%] h-[40%] w-[40%] rounded-full bg-cyan-500/5 blur-[120px]" />
+        </div>
+
+      </div>
     </Router>
   );
 }
