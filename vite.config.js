@@ -1,21 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 3000,
-  },
+  // This tells Vite exactly where to start
+  root: process.cwd(), 
   build: {
-    // This ensures your build goes to the 'dist' folder Vercel expects
     outDir: 'dist',
-    sourcemap: true,
-  },
-  resolve: {
-    alias: {
-      // Useful if you start using @/components paths later
-      '@': '/src',
+    rollupOptions: {
+      input: './index.html', // Manually pointing to the entry point
     },
   },
 })
