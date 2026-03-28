@@ -1,50 +1,43 @@
 {
-  "project_name": "OTD AI SURFER",
-  "organization": "Ocean Tide Drop",
-  "year": 2026,
-  "theme": {
-    "background_color": "black",
-    "text_color": "white",
-    "accent_color": "cyan-400",
-    "font_family": "font-sans",
-    "aesthetic": "Digital Ecosystem Architect"
+  "name": "otd-ai-surfer",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
-  "navigation_routes": [
-    {
-      "name": "Web Builds",
-      "path": "/web",
-      "icon": "Globe",
-      "gradient": "from-cyan-500/20"
-    },
-    {
-      "name": "Game Builds",
-      "path": "/games",
-      "icon": "Gamepad2",
-      "gradient": "from-purple-500/20"
-    },
-    {
-      "name": "Workflows",
-      "path": "/flows",
-      "icon": "Database",
-      "gradient": "from-emerald-500/20"
-    },
-    {
-      "name": "Automations",
-      "path": "/auto",
-      "icon": "Bot",
-      "gradient": "from-orange-500/20"
-    },
-    {
-      "name": "The Vault",
-      "path": "/vault",
-      "icon": "Lock",
-      "gradient": "from-red-500/20"
-    }
-  ],
-  "dependencies": [
+  "dependencies": {
+    "lucide-react": "^0.284.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.16.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^1.14.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.5"
+  },
+  "description": "Digital Ecosystem Architect platform for Ocean Tide Drop featuring AI workflows, lead generation tools, and game engine logic builds.",
+  "author": "Ocean Tide Drop",
+  "keywords": [
     "react",
-    "react-router-dom",
-    "lucide-react"
-  ],
-  "status": "Optimized"
+    "vite",
+    "tailwind",
+    "automation",
+    "ai",
+    "workflow"
+  ]
 }
