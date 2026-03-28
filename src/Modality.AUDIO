@@ -1,0 +1,7 @@
+new Live(
+apiClient: ApiClient,
+auth: Auth,
+webSocketFactory: WebSocketFactory,
+): Live
+Modality.AUDIO
+window.location.href
