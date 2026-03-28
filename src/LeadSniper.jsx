@@ -1,97 +1,102 @@
 import React, { useState } from 'react';
-import { Target, ArrowLeft, Search, CheckCircle, Shield } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Search, Crosshair, Zap, ShieldCheck, Database, Sliders } from 'lucide-react';
 
 const LeadSniper = () => {
   const [isScanning, setIsScanning] = useState(false);
-  const [results, setResults] = useState([]);
-  const [query, setQuery] = useState('');
 
   const startScan = () => {
-    if (!query) return alert("Please enter a target niche");
     setIsScanning(true);
-    setResults([]);
-    
-    // Simulate the AI "Hunting" phase
-    setTimeout(() => {
-      setResults([
-        { name: "James Holden", role: "CEO", company: "Rocinante Logistics", email: "j.holden@rocicorp.com" },
-        { name: "Naomi Nagata", role: "CTO", company: "Belt Tech", email: "nagata@belt.io" },
-        { name: "Chrisjen A.", role: "Founder", company: "Terraform Group", email: "ca@terraform.com" }
-      ]);
-      setIsScanning(false);
-    }, 2500);
+    setTimeout(() => setIsScanning(false), 3000);
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-6 md:p-12 font-sans">
-      <div className="max-w-4xl mx-auto">
-        {/* Navigation back to the Vault hub */}
-        <Link to="/vault" className="flex items-center gap-2 text-emerald-400 mb-8 hover:text-white transition-colors no-underline font-black uppercase tracking-widest text-[10px]">
-          <ArrowLeft size={14} /> Back to Vault
-        </Link>
+    <div className="min-h-screen bg-[#050505] text-white p-8 relative">
+      
+      {/* Background Neon Mist */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-neon-blue/10 blur-[150px] pointer-events-none"></div>
+      
+      <div className="max-w-6xl mx-auto">
+        {/* Header with Neon Aqua Underline */}
+        <div className="mb-12">
+          <h2 className="text-4xl font-black italic uppercase tracking-tighter">
+            Lead <span className="text-neon-aqua">Sniper</span> V1.0
+          </h2>
+          <div className="h-1 w-32 bg-gradient-to-r from-neon-aqua via-neon-purple to-transparent mt-2"></div>
+        </div>
 
-        <div className="bg-slate-900/40 border border-emerald-500/20 rounded-[3rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
-          <header className="mb-12">
-            <h1 className="text-4xl font-black italic uppercase tracking-tighter mb-2">Lead Sniper V1.0</h1>
-            <p className="text-slate-500 font-mono text-[10px] uppercase tracking-[0.4em]">// OSINT EXTRACTION ENGINE</p>
-          </header>
-
-          {/* Search Interface */}
-          <div className="flex flex-col md:flex-row gap-4 mb-12">
-            <div className="relative flex-grow">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
-              <input 
-                type="text" 
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Enter Target Niche (e.g. 'Logistics CEOs')..." 
-                className="w-full bg-slate-950 border border-slate-800 p-5 pl-14 rounded-2xl outline-none focus:border-emerald-500/50 transition-all font-mono text-sm text-white"
-              />
-            </div>
-            <button 
-              onClick={startScan} 
-              disabled={isScanning}
-              className="bg-emerald-600 hover:bg-emerald-400 px-10 py-5 rounded-2xl font-black uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed text-black"
-            >
-              {isScanning ? "Scanning..." : "Start Sniper"}
-            </button>
-          </div>
-
-          {/* Results Display */}
-          <div className="space-y-4">
-            {isScanning && (
-              <div className="flex items-center justify-center p-20">
-                <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
-              </div>
-            )}
-
-            {results.length > 0 && !isScanning && (
-              <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                <div className="text-[10px] text-emerald-500 font-black uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-                  <CheckCircle size={12} /> Extraction Complete: 3 Targets Found
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* LEFT: Search Controls */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-slate-900/50 border border-white/10 p-6 rounded-[2rem] backdrop-blur-xl">
+              <label className="text-[10px] font-black uppercase tracking-[0.3em] text-neon-pink mb-4 block">Target Parameters</label>
+              
+              <div className="space-y-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-3 text-white/30" size={18} />
+                  <input 
+                    type="text" 
+                    placeholder="Industry (e.g. AI SaaS)" 
+                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm focus:border-neon-aqua outline-none transition-all"
+                  />
                 </div>
-                {results.map((lead, i) => (
-                  <div key={i} className="bg-slate-950/50 p-6 rounded-2xl border border-slate-800 mb-3 flex justify-between items-center group hover:border-emerald-500/30 transition-all">
-                    <div>
-                      <div className="font-bold text-xl italic tracking-tight text-white group-hover:text-emerald-400 transition-colors">{lead.name}</div>
-                      <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-1">{lead.role} // {lead.company}</div>
-                    </div>
-                    <div className="text-emerald-500 font-mono text-xs bg-emerald-500/5 px-4 py-2 rounded-lg border border-emerald-500/10">
-                      {lead.email}
-                    </div>
-                  </div>
-                ))}
+                <div className="relative">
+                  <Sliders className="absolute left-3 top-3 text-white/30" size={18} />
+                  <input 
+                    type="text" 
+                    placeholder="Location (e.g. Charleston)" 
+                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm focus:border-neon-aqua outline-none transition-all"
+                  />
+                </div>
               </div>
-            )}
+
+              <button 
+                onClick={startScan}
+                className={`w-full mt-6 py-4 rounded-xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(57,255,20,0.2)]
+                  ${isScanning ? 'bg-neon-green text-black animate-pulse' : 'bg-white/5 text-neon-green border border-neon-green/50 hover:bg-neon-green hover:text-black'}
+                `}
+              >
+                {isScanning ? <Zap size={16} className="animate-bounce" /> : <Crosshair size={16} />}
+                {isScanning ? 'Scanning Tides...' : 'Initialize Extraction'}
+              </button>
+            </div>
+
+            {/* Shield Info */}
+            <div className="p-6 rounded-[2rem] bg-neon-purple/5 border border-neon-purple/20 flex gap-4">
+              <ShieldCheck className="text-neon-purple shrink-0" />
+              <p className="text-[10px] leading-relaxed text-slate-400 uppercase font-bold tracking-wider">
+                Compliance Protocol Alpha: All extractions are verified via the <span className="text-neon-purple">Sentinel</span> to avoid shadowban risks.
+              </p>
+            </div>
           </div>
 
-          {!isScanning && results.length === 0 && (
-            <div className="border border-dashed border-slate-800 rounded-3xl p-20 text-center">
-              <Shield className="mx-auto text-slate-800 mb-4" size={48} />
-              <p className="text-slate-600 font-mono text-xs uppercase tracking-widest text-balance">System Idle. Awaiting Target Parameters.</p>
+          {/* RIGHT: Live Data Feed */}
+          <div className="lg:col-span-2">
+            <div className="bg-slate-900/50 border border-white/10 rounded-[2rem] overflow-hidden backdrop-blur-xl">
+              <div className="p-4 border-b border-white/10 bg-white/5 flex justify-between items-center">
+                <span className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                  <Database size={14} className="text-neon-blue" /> Live Data Stream
+                </span>
+                <div className="flex gap-1">
+                  <div className="w-2 h-2 rounded-full bg-neon-green animate-ping"></div>
+                  <div className="w-2 h-2 rounded-full bg-neon-green"></div>
+                </div>
+              </div>
+              
+              <div className="p-6 h-[400px] overflow-y-auto space-y-4 font-mono">
+                {isScanning ? (
+                  <div className="space-y-2">
+                    <p className="text-neon-aqua text-xs">{`> Accessing Neural Layer...`}</p>
+                    <p className="text-neon-pink text-xs">{`> Bypassing Gateways...`}</p>
+                    <p className="text-neon-green text-xs">{`> Extracting Lead Data [####-------]`}</p>
+                  </div>
+                ) : (
+                  <p className="text-white/20 text-xs italic">Awaiting target initialization...</p>
+                )}
+              </div>
             </div>
-          )}
+          </div>
+
         </div>
       </div>
     </div>
