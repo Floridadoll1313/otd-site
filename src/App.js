@@ -1,3 +1,24 @@
+const useTypewriter = (text, speed = 50) => {
+  const [displayedText, setDisplayedText] = React.useState("");
+
+  React.useEffect(() => {
+    let i = 0;
+    setDisplayedText(""); // Clear previous text
+    
+    const typingInterval = setInterval(() => {
+      if (i < text.length) {
+        setDisplayedText((prev) => prev + text.charAt(i));
+        i++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, speed);
+
+    return () => clearInterval(typingInterval);
+  }, [text, speed]);
+
+  return displayedText;
+};
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 
