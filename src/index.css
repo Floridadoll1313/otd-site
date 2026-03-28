@@ -1,56 +1,15 @@
-{
-  "theme_name": "CUSTOM AI SURFER THEME",
-  "framework": "Tailwind CSS",
-  "color_palette": {
-    "neon-pink": "#ec4899",
-    "neon-cyan": "#22d3ee",
-    "background_deep_sea": "#020617"
-  },
-  "global_styles": {
-    "body": {
-      "background_color": "#020617",
-      "text_color": "white",
-      "font_family": "Inter, sans-serif",
-      "overflow_x": "hidden"
-    }
-  },
-  "animations": [
-    {
-      "id": "pulse-glow",
-      "description": "Infinite cycling of opacity and blur levels",
-      "keyframes": {
-        "0%_100%": "opacity: 0.5, blur: 40px",
-        "50%": "opacity: 0.8, blur: 60px"
-      }
-    }
-  ],
-  "custom_classes": [
-    {
-      "name": "animate-glow",
-      "behavior": "4s ease-in-out infinite animation"
-    },
-    {
-      "name": "sparkle-overlay",
-      "description": "Non-interactive stardust pattern layer",
-      "source_url": "https://www.transparenttextures.com/patterns/stardust.png",
-      "opacity": 0.15,
-      "z_index": 1
-    },
-    {
-      "name": "glass-card",
-      "visual_effects": {
-        "background": "rgba(15, 23, 42, 0.6)",
-        "backdrop_filter": "blur(12px)",
-        "border": "1px solid rgba(255, 255, 255, 0.1)"
-      }
-    }
-  ],
-  "ui_components": {
-    "scrollbar": {
-      "width": "8px",
-      "track": "#020617",
-      "thumb": "Linear gradient from neon-cyan to neon-pink",
-      "border_radius": "10px"
-    }
-  }
+/* src/index.css */
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
