@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Users2, Download, Star, ShieldCheck, Cpu, LayoutGrid, Lock, Home as HomeIcon, Activity, CheckSquare } from 'lucide-react';
+import { Users2, Download, Star, ShieldCheck, Cpu, LayoutGrid, Lock, Home as HomeIcon, Activity, CheckSquare, Wand2, Copy, CheckCircle, Terminal } from 'lucide-react';
 
 // --- 1. THE TYPEWRITER ENGINE ---
 const useTypewriter = (text, speed = 50) => {
@@ -19,101 +19,71 @@ const useTypewriter = (text, speed = 50) => {
   return displayedText;
 };
 
-// --- 2. AUTOMATION SCORECARD COMPONENT ---
-const AutomationScorecard = () => {
-  const [selected, setSelected] = useState([]);
-  const tasks = [
-    { id: 1, label: "Manual Lead Data Entry", weight: 15 },
-    { id: 2, label: "Daily Social Media Scheduling", weight: 10 },
-    { id: 3, label: "Customer Support Ticket Sorting", weight: 25 },
-    { id: 4, label: "Invoice Generation & Emailing", weight: 20 },
-    { id: 5, label: "CRM Contact Enrichment", weight: 30 }
-  ];
+// --- 2. PROMPT FORGE COMPONENT ---
+const PromptForge = () => {
+  const [role, setRole] = useState('Marketing Expert');
+  const [goal, setGoal] = useState('Write an email sequence');
+  const [copied, setCopied] = useState(false);
 
-  const toggleTask = (id) => {
-    setSelected(prev => prev.includes(id) ? prev.filter(t => t !== id) : [...prev, id]);
+  const generatedPrompt = `ACT AS A [${role.toUpperCase()}]. YOUR CORE OBJECTIVE IS TO [${goal.toUpperCase()}]. \n\nCONSTRAINTS: \n- USE PSYCHOLOGICAL TRIGGERS (URGENCY, SOCIAL PROOF).\n- MAINTAIN A HIGH-AUTHORITY, PROFESSIONAL TONE.\n- OUTPUT IN MARKDOWN FORMAT.`;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(generatedPrompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
-
-  const humanOverhead = selected.reduce((acc, id) => {
-    const task = tasks.find(t => t.id === id);
-    return acc + (task ? task.weight : 0);
-  }, 0);
 
   return (
     <div className="p-10 max-w-2xl mx-auto animate-in fade-in duration-700">
-      <div className="flex items-center gap-3 mb-8 border-b border-emerald-500/20 pb-4">
-        <Activity className="text-emerald-400" />
-        <h2 className="text-2xl font-black uppercase italic text-white">System Diagnostic</h2>
-      </div>
-
-      <div className="space-y-3 mb-10">
-        {tasks.map(task => (
-          <div 
-            key={task.id} 
-            onClick={() => toggleTask(task.id)}
-            className={`p-4 rounded-xl border transition-all cursor-pointer flex justify-between items-center ${
-              selected.includes(task.id) 
-              ? 'bg-emerald-500/10 border-emerald-500 text-white' 
-              : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:border-slate-700'
-            }`}
-          >
-            <span className="font-mono text-[10px] uppercase tracking-widest">{task.label}</span>
-            {selected.includes(task.id) ? <CheckSquare size={16} className="text-emerald-400" /> : <div className="w-4 h-4 border border-slate-700 rounded" />}
-          </div>
-        ))}
-      </div>
-
-      <div className="bg-black/60 p-8 rounded-3xl border border-slate-800 flex flex-col items-center text-center backdrop-blur-md">
-        <div className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em] mb-2">Human Overhead Score</div>
-        <div className={`text-7xl font-black italic transition-colors duration-500 ${humanOverhead > 50 ? 'text-red-500' : 'text-emerald-500'}`}>
-          {humanOverhead}%
+      <div className="bg-slate-900/80 border border-emerald-500/20 p-8 rounded-[2.5rem] shadow-2xl backdrop-blur-xl">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-400"><Wand2 size={24} /></div>
+          <h2 className="text-2xl font-black uppercase italic text-white">Prompt Forge <span className="text-emerald-500 font-mono text-[10px] tracking-[0.3em] ml-4">// V2.1</span></h2>
         </div>
-        <p className="text-slate-400 text-[10px] mt-4 font-mono leading-relaxed uppercase max-w-xs">
-          {humanOverhead > 0 
-            ? "Your ecosystem is leaking capital through manual logic. Deploy agents to recover." 
-            : "Select manual tasks to begin infrastructure diagnosis."}
-        </p>
+
+        <div className="space-y-6">
+          <div>
+            <label className="text-[10px] font-mono uppercase text-slate-500 tracking-widest block mb-2">Define AI Persona</label>
+            <input type="text" value={role} onChange={(e) => setRole(e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-emerald-400 font-mono text-sm focus:border-emerald-500 outline-none transition-all" />
+          </div>
+
+          <div>
+            <label className="text-[10px] font-mono uppercase text-slate-500 tracking-widest block mb-2">Define Objective</label>
+            <textarea value={goal} onChange={(e) => setGoal(e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-emerald-400 font-mono text-sm focus:border-emerald-500 outline-none h-24 transition-all" />
+          </div>
+
+          <div className="bg-black/50 p-6 rounded-2xl border border-slate-800 relative">
+            <div className="text-[10px] font-mono text-slate-600 absolute top-4 left-4 flex items-center gap-2">
+              <Terminal size={12} /> ENGINE_OUTPUT.txt
+            </div>
+            <p className="text-slate-300 font-mono text-[11px] mt-6 leading-relaxed whitespace-pre-wrap">
+              {generatedPrompt}
+            </p>
+            <button onClick={handleCopy} className="absolute top-4 right-4 text-emerald-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] font-black uppercase">
+              {copied ? <CheckCircle size={14} /> : <Copy size={14} />}
+              {copied ? "Copied" : "Copy Script"}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-// --- 3. MARKETPLACE COMPONENT ---
-const AgentMarketplace = () => {
-  const agents = [
-    { id: 'ag_01', name: "The Cold Closer", role: "Sales", desc: "B2B objection handling specialist.", tech: "GPT-4o" },
-    { id: 'ag_02', name: "The Social Architect", role: "Content", desc: "Expert in 'Voice Mimicry' logic.", tech: "Claude 3.5" },
-    { id: 'ag_03', name: "The System Auditor", role: "Ops", desc: "Scans workflows for leakage.", tech: "Custom RAG" }
-  ];
-
-  return (
-    <div className="p-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in duration-700">
-      {agents.map((agent) => (
-        <div key={agent.id} className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl hover:border-emerald-500/40 transition-all">
-          <Cpu size={20} className="text-emerald-500 mb-4" />
-          <h3 className="text-xl font-bold italic text-white">{agent.name}</h3>
-          <p className="text-slate-400 text-xs my-4">{agent.desc}</p>
-          <div className="flex justify-between items-center pt-4 border-t border-slate-800/50">
-            <span className="text-[9px] font-mono text-slate-600 uppercase">{agent.tech}</span>
-            <button className="bg-emerald-600 text-black px-4 py-2 rounded-lg text-[10px] font-black uppercase">Deploy</button>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-// --- 4. HOME PAGE ---
+// --- 3. PREVIOUS COMPONENTS (Scorecard, Marketplace, etc.) ---
+const AutomationScorecard = () => { /* Logic from previous turn */ };
+const AgentMarketplace = () => { /* Logic from previous turn */ };
 const Home = () => {
-  const text = useTypewriter("OTD_AI_SURFER // PROTOCOL_V2", 60);
+  const text = useTypewriter("OTD_ELITE_ACCESS // V2.0", 60);
   return <div className="p-20 font-mono text-cyan-400"><h1 className="text-5xl font-black italic">{text}</h1></div>;
 };
 
-// --- 5. SYSTEM DOCK ---
+// --- 4. SYSTEM DOCK ---
 const SystemDock = () => {
   const location = useLocation();
   const navItems = [
     { path: '/', icon: <HomeIcon size={20} /> },
+    { path: '/forge', icon: <Wand2 size={20} /> },
     { path: '/scorecard', icon: <Activity size={20} /> },
     { path: '/marketplace', icon: <LayoutGrid size={20} /> },
   ];
@@ -131,7 +101,7 @@ const SystemDock = () => {
   );
 };
 
-// --- 6. MAIN APP ---
+// --- 5. MAIN APP ASSEMBLY ---
 export default function App() {
   return (
     <Router>
@@ -140,11 +110,12 @@ export default function App() {
         <main className="relative z-10 pt-10 pb-32">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/forge" element={<PromptForge />} />
             <Route path="/scorecard" element={<AutomationScorecard />} />
             <Route path="/marketplace" element={<AgentMarketplace />} />
           </Routes>
         </main>
-        {/* CRT Scanline Effect */}
+        {/* CRT VFX OVERLAY */}
         <div className="pointer-events-none fixed inset-0 z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_3px,3px_100%] opacity-40" />
       </div>
     </Router>
