@@ -1,24 +1,24 @@
 import React from "react";
 import "./App.css";
 
-// Optional: Global header, dock, or navigation
+// Global UI components
 import SystemDock from "./components/SystemDock.jsx";
 import GlobalHeader from "./components/GlobalHeader.js";
 
 export default function App({ children }) {
   return (
-    <div className="app-container min-h-screen w-full bg-black text-white overflow-x-hidden">
+    <div className="app-shell min-h-screen w-full bg-black text-white overflow-x-hidden">
 
       {/* Global Header */}
       {GlobalHeader && <GlobalHeader />}
 
-      {/* System Dock (bottom navigation / tools) */}
-      {SystemDock && <SystemDock />}
-
-      {/* Main Content */}
-      <main className="pt-20 pb-20 px-4">
+      {/* Main Content Area */}
+      <main className="pt-20 pb-24 px-4">
         {children}
       </main>
+
+      {/* System Dock (bottom navigation) */}
+      {SystemDock && <SystemDock />}
     </div>
   );
 }
