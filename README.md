@@ -14,7 +14,7 @@ index.js	The entry point that mounts the React engine to the DOM.
 SystemDock.jsx	The persistent, high-tech navigation hub seen on every page.
 UseTypewriter.jsx	Custom hook for the signature "Terminal-style" text animations.
 index.css	Global styles (Black/Emerald/Cyan) and custom "Sea-Pulse" animations.
-📈 Growth & Conversion (The Front-End)
+📈 Growth & Conversion (The Front-End)  
 File	Purpose
 Home.jsx	The digital storefront. High-impact visuals and the brand hook.
 About.jsx	The "Why." Deep dive into the Ocean Tide Drop mission.
