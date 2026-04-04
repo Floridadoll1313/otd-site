@@ -1,10 +1,13 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 import "./App.css";
 
 // Global UI Components
 import GlobalHeader from "./components/GlobalHeader.js";
 import SystemDock from "./components/SystemDock.js";
+
+// Router
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
 
 function App() {
   return (
@@ -12,10 +15,9 @@ function App() {
       {/* Global Header */}
       <GlobalHeader />
 
-      {/* Main Content Area */}
+      {/* Routed Pages */}
       <div className="app-content">
-        {/* Routed pages appear here */}
-        <Outlet />
+        <RouterProvider router={router} />
       </div>
 
       {/* Global Dock */}
