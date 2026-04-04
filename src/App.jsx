@@ -1,29 +1,13 @@
 import React from "react";
-import "./App.css";
-
-// Global UI Components
-import GlobalHeader from "./components/GlobalHeader.jsx";
-import SystemDock from "./components/SystemDock.js";
-
-// Router
 import { RouterProvider } from "react-router-dom";
-import { router } from "./router";
+import router from "./router";
+import GlobalHeader from "./components/GlobalHeader.js";
 
-function App() {
+export default function App() {
   return (
-    <div className="app-shell">
-      {/* Global Header */}
+    <div className="app-container">
       <GlobalHeader />
-
-      {/* Routed Pages */}
-      <div className="app-content">
-        <RouterProvider router={router} />
-      </div>
-
-      {/* Global Dock */}
-      <SystemDock />
+      <RouterProvider router={router} />
     </div>
   );
 }
-
-export default App;
