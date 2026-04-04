@@ -2,7 +2,7 @@ import React from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
 
-// These MUST match your actual filenames in /components
+// Correct imports based on your actual files
 import GlobalHeader from "./components/GlobalHeader.jsx";
 import SystemDock from "./components/SystemDock.js";
 
