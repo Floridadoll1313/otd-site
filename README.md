@@ -3,7 +3,7 @@
 🏄‍♂️ Ocean Tide Drop: System Manifest
 Version: 1.0.4 // Launch Date: March 28, 2026
 
-Architect: Florida doll
+Architect: Floridadoll
 
 Primary Stack: FARM (FastAPI, React, MongoDB) + Vite + Tailwind CSS
 
