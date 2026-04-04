@@ -6,6 +6,7 @@ import router from "./router";
 import GlobalHeader from "./components/GlobalHeader.jsx";
 import SystemDock from "./components/SystemDock.js";
 
+
 export default function App() {
   return (
     <div className="app-container">
