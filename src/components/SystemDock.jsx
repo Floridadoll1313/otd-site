@@ -1,9 +1,12 @@
 import React from "react";
+import "./SystemDock.css";
 
 export default function SystemDock() {
   return (
-    <div style={{ padding: "20px", color: "white" }}>
-      System Dock Loaded
+    <div className="system-dock">
+      <div className="dock-inner">
+        <span className="dock-title">Ocean Tide Drop System Dock Loaded</span>
+      </div>
     </div>
   );
 }
