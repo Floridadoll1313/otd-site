@@ -1,97 +1,82 @@
-{
-  "component_name": "MemberPass",
-  "title": "Member Access",
-  "description": "Enter your credentials to access your custom AI dashboard and project analytics.",
-  "authentication_elements": {
-    "input": {
-      "type": "password",
-      "placeholder": "Access Code",
-      "style": "font-mono text-emerald-400 bg-slate-950 border-slate-800"
-    },
-    "button": {
-      "text": "Authenticate",
-      "style": "bg-emerald-600 hover:bg-emerald-400 font-black uppercase tracking-widest"
-    }
-  },{
-  "component_name": "MemberServices",
-  "filename": "MemberServices.js",
-  "portal_title": "Member Excellence Suite",
-  "access_level": "PRO // ELITE",
-  "services": [
-    {
-      "id": "svc_01",
-      "name": "Neural Strategy Audit",
-      "category": "Consulting",
-      "description": "Quarterly deep-dive into your current tech stack to identify high-leakage points and automation opportunities.",
-      "benefit": "Reduction in overhead by up to 40% through journey re-mapping.",
-      "status": "Available",
-      "icon": "Search"
-    },
-    {
-      "id": "svc_02",
-      "name": "Custom Agent Deployment",
-      "category": "Implementation",
-      "description": "Full-service configuration of Vapi or Retell AI voice agents tailored to your business voice and specific CRM logic.",
-      "benefit": "24/7 lead qualification without human intervention.",
-      "status": "High Demand",
-      "icon": "Cpu"
-    },
-    {
-      "id": "svc_03",
-      "name": "The Blueprint Vault",
-      "category": "Resource",
-      "description": "Exclusive access to our library of internal SOPs, Framer templates, and Zapier/Make.com JSON blueprints.",
-      "benefit": "Instant deployment of proven workflows—no 'building from scratch'.",
-      "status": "Updated Weekly",
-      "icon": "Database"
-    },
-    {
-      "id": "svc_04",
-      "name": "Priority Dev Pipeline",
-      "category": "Development",
-      "description": "Skip the standard queue for custom Web or Game engine features. Direct access to our lead architect.",
-      "benefit": "72-hour turnaround on feature requests and logic adjustments.",
-      "status": "Member-Only",
-      "icon": "Zap"
-    },
-    {
-      "id": "svc_05",
-      "name": "Revenue Optimization Lab",
-      "category": "Monetization",
-      "description": "We analyze your traffic and conversion data to implement AI-driven upsells and churn-prevention sequences.",
-      "benefit": "Maximize LTV (Lifetime Value) of every captured lead.",
-      "status": "Strategic",
-      "icon": "TrendingUp"
-    }
-  ],
-  "visual_style": {
-    "background": "bg-slate-950",
-    "card_layout": "bg-slate-900/60 border-slate-800",
-    "accent_text": "text-emerald-500",
-    "title_font": "font-black italic uppercase tracking-tighter",
-    "status_badge": "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-  },
-  "integration_tip": "Display these in the 'Member Pass' dashboard after a user authenticates. Each service should link to a booking form or a specific 'Request Implementation' endpoint."
-}
-  "security_footer": {
-    "text": "Secure Entry Point",
-    "icon": "ShieldCheck",
-    "style": "text-[10px] font-black uppercase tracking-widest text-slate-600"
-  },
-  "visual_style": {
-    "background_color": "bg-slate-950",
-    "card_background": "bg-slate-900",
-    "accent_color": "emerald-400",
-    "border_radius": "rounded-[3.5rem]",
-    "container_max_width": "max-w-md",
-    "padding": "p-12",
-    "typography": {
-      "title": "text-3xl font-black uppercase italic",
-      "description": "text-slate-500 text-sm"
-    }
-  },
-  "icons_used": [
-    "Key",
-    "ShieldCheck"
-  ]
+import React, { useState } from "react";
+import { Key, ShieldCheck } from "lucide-react";
+
+const ACCESS_CODE = "OCEAN2025"; // move to env var when ready
+
+export default function MemberPass({ onAuthenticated }) {
+  const [code, setCode] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleAuth = () => {
+    setLoading(true);
+    setTimeout(() => {
+      if (code === ACCESS_CODE) {
+        onAuthenticated();
+      } else {
+        setError(true);
+        setLoading(false);
+      }
+    }, 800);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+      <div className="bg-slate-900 rounded-[3.5rem] p-12 max-w-md w-full border border-slate-800 flex flex-col items-center gap-8">
+        
+        {/* Icon */}
+        <div className="w-16 h-16 rounded-full border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center">
+          <Key className="text-emerald-400 w-7 h-7" />
+        </div>
+
+        {/* Title */}
+        <div className="text-center">
+          <h1 className="text-3xl font-black uppercase italic tracking-tighter text-white mb-2">
+            Member Access
+          </h1>
+          <p className="text-slate-500 text-sm leading-relaxed">
+            Enter your credentials to access your custom AI dashboard and project analytics.
+          </p>
+        </div>
+
+        {/* Input */}
+        <div className="w-full flex flex-col gap-3">
+          <input
+            type="password"
+            placeholder="Access Code"
+            value={code}
+            onChange={(e) => { setCode(e.target.value); setError(false); }}
+            onKeyDown={(e) => e.key === "Enter" && handleAuth()}
+            className={`w-full bg-slate-950 border rounded-xl px-5 py-4 font-mono text-emerald-400 placeholder-slate-600 outline-none transition-all ${
+              error
+                ? "border-red-500/60 focus:border-red-400"
+                : "border-slate-800 focus:border-emerald-500/60"
+            }`}
+          />
+          {error && (
+            <p className="text-red-400 text-xs font-mono text-center">
+              Invalid access code. Try again.
+            </p>
+          )}
+        </div>
+
+        {/* Button */}
+        <button
+          onClick={handleAuth}
+          disabled={loading || !code}
+          className="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-400 hover:text-black text-white font-black uppercase tracking-widest text-sm transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          {loading ? "Authenticating..." : "Authenticate"}
+        </button>
+
+        {/* Footer */}
+        <div className="flex items-center gap-2 text-slate-600">
+          <ShieldCheck className="w-3 h-3" />
+          <span className="text-[10px] font-black uppercase tracking-widest">
+            Secure Entry Point
+          </span>
+        </div>
+      </div>
+    </div>
+  );
 }
