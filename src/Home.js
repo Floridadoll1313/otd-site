@@ -1,26 +1,34 @@
-```javascript
-import React from 'react';
-import Logo from './Logo'; // Ensure Logo.js exists
-import { Link } from 'react-router-dom';
+import React from "react";
 
-const Home = () => (
-  <div className="min-h-screen bg-black text-white p-8 font-sans selection:bg-cyan-500/30">
-    <div className="max-w-6xl mx-auto">
-      <header className="mb-20 mt-12 flex flex-col items-center text-center">
-        {/* LARGE LOGO FOR HOME PAGE  */}
-        <Logo className="w-64 md:w-96 mb-8" withTagline={true} />
-        
-        <div className="h-px w-32 bg-gradient-to-r from-transparent via-cyan-500 to-transparent my-8 opacity-50" />
-        
-        <p className="text-xl md:text-2xl text-cyan-400 font-light tracking-[0.2em] uppercase italic">
-          Digital Ecosystem Architect
-        </p>
-      </header>
+export default function Home() {
+  return (
+    <div className="max-w-4xl mx-auto px-6 py-10 text-center">
+      <h1 className="text-4xl md:text-6xl font-bold mb-6 text-blue-300">
+        Ocean Tide Drop
+      </h1>
 
-      {/* Navigation Grid would continue here */}
+      <p className="text-xl md:text-2xl text-blue-100 mb-10 leading-relaxed">
+        Creative Technology & Brand Systems for Founders  
+        We build modern, cinematic websites and customer experience systems 
+        that help founders and small businesses launch with clarity, confidence, 
+        and momentum.
+      </p>
+
+      <div className="flex justify-center gap-6 mt-8">
+        <a
+          href="/services"
+          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-semibold transition"
+        >
+          View Services
+        </a>
+
+        <a
+          href="/contact"
+          className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-lg text-blue-200 font-semibold transition"
+        >
+          Contact Us
+        </a>
+      </div>
     </div>
-  </div>
-);
-
-export default Home;
-``` [8]
+  );
+}
