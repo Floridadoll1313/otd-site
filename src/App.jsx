@@ -1,20 +1,31 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "./App";
+import { Outlet, Link } from "react-router-dom";
 
-import Home from "./pages/Home";
-import Services from "./pages/Services";
-import Contact from "./pages/Contact";
+export default function App() {
+  return (
+    <div className="min-h-screen bg-white text-gray-900">
+      {/* Header / Navigation */}
+      <header className="w-full py-6 border-b border-gray-200">
+        <nav className="max-w-6xl mx-auto flex items-center justify-between px-4">
+          <div className="text-2xl font-bold">Ocean Tide Drop</div>
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,   // ← THIS IS THE FIX
-    children: [
-      { index: true, element: <Home /> },
-      { path: "services", element: <Services /> },
-      { path: "contact", element: <Contact /> },
-    ],
-  },
-]);
+          <div className="flex gap-6 text-lg">
+            <Link to="/" className="hover:text-blue-600 transition">
+              Home
+            </Link>
+            <Link to="/services" className="hover:text-blue-600 transition">
+              Services
+            </Link>
+            <Link to="/contact" className="hover:text-blue-600 transition">
+              Contact
+            </Link>
+          </div>
+        </nav>
+      </header>
 
-export default router;
+      {/* Routed Page Content */}
+      <main className="max-w-6xl mx-auto px-4 py-10">
+        <Outlet />
+      </main>
+    </div>
+  );
+}
