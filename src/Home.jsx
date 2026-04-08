@@ -14,6 +14,10 @@ export default function Home() {
         and momentum.
       </p>
 
+      <p className="text-teal-400 font-semibold mb-10">
+        Based in West Ashley, Charleston, SC
+      </p>
+
       <div className="flex justify-center gap-6 mt-8">
         <a
           href="/services"
