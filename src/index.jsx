@@ -1,15 +1,27 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import App from "./App.jsx";
-import "./index.css";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const rootElement = document.getElementById("root");
+import App from "./App";
+import Home from "./pages/Home";
+import MembershipGate from "./components/MembershipGate";
 
-createRoot(rootElement).render(
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <MembershipGate>
+        <App />
+      </MembershipGate>
+    ),
+    children: [
+      { index: true, element: <Home /> },
+    ],
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
