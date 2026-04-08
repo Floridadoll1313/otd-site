@@ -9,7 +9,10 @@ import Home from "./pages/Home";
 import Services from "./pages/Services";
 import Realm from "./pages/Realm";
 import Contact from "./pages/Contact";
-import Membership from "./pages/Membership";
+import MemberPortal from "./MemberPortal";
+import MemberServices from "./MemberServices";
+import MemberPass from "./MemberPass";
+
 
 // Global Styles
 import "./index.css";
