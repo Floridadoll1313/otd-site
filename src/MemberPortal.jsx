@@ -1,41 +1,71 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Outlet, Link, useLocation } from "react-router-dom";
+import "./memberportal.css";
 
 export default function MemberPortal() {
-  const unlock = () => {
-    localStorage.setItem("ocean_member", "true");
-    window.location.href = "/memberservices";
-  };
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  const tools = [
+    { name: "Workflows", path: "workflows", size: "hero" },
+    { name: "Strategy", path: "strategy", size: "hero" },
+    { name: "Blueprint Library", path: "blueprints", size: "hero" },
+    { name: "Production", path: "production", size: "medium" },
+    { name: "Website Build", path: "websitebuild", size: "medium" },
+    { name: "Automation Scorecard", path: "automation", size: "medium" },
+    { name: "Lead Sniper", path: "leadsniper", size: "medium" },
+    { name: "Market Insights", path: "marketinsights", size: "medium" },
+    { name: "ROI Calculator", path: "roi", size: "medium" },
+    { name: "Secure CTA", path: "securecta", size: "medium" },
+    { name: "Vault", path: "vault", size: "medium" },
+    { name: "Voice Interface", path: "voice", size: "medium" },
+    { name: "Token Arbitrage", path: "token", size: "medium" },
+    { name: "Agent Marketplace", path: "agents", size: "medium" },
+    { name: "PromptForge", path: "promptforge", size: "small" },
+    { name: "Interaction", path: "interaction", size: "small" },
+    { name: "Pricing", path: "pricing", size: "small" },
+    { name: "About", path: "about", size: "small" },
+    // Victoria is intentionally NOT included here (private)
+  ];
+
+  const isDashboard = location.pathname.endsWith("/memberportal") || location.pathname.endsWith("/dashboard");
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-black via-slate-900 to-black text-white px-6 py-20">
-      <div className="max-w-3xl mx-auto text-center">
-
-        <h1 className="text-4xl font-bold text-teal-300 drop-shadow-[0_0_12px_rgba(45,212,191,0.8)]">
-          Member Portal
-        </h1>
-
-        <p className="mt-4 text-lg text-teal-200/80">
-          Access your tools, services, and the inner realm of Ocean Tide Drop.
-        </p>
-
-        <button
-          onClick={unlock}
-          className="mt-10 px-8 py-3 bg-teal-500 hover:bg-teal-400 text-black font-bold rounded-lg shadow-lg shadow-teal-500/40 transition-all"
-        >
-          Unlock Membership
-        </button>
-
-        <div className="mt-10">
-          <Link
-            to="/"
-            className="text-teal-300 hover:text-teal-200 underline underline-offset-4"
-          >
-            Return Home
-          </Link>
+    <div className="memberportal-container">
+      {isDashboard ? (
+        <div className="dashboard-grid">
+          {tools.map((tool) => (
+            <Link
+              key={tool.path}
+              to={tool.path}
+              className={`tile tile-${tool.size}`}
+            >
+              <div className="tile-content">{tool.name}</div>
+            </Link>
+          ))}
         </div>
+      ) : (
+        <div className="workspace">
+          <aside className="sidebar">
+            <h2>Member Tools</h2>
+            {tools.map((tool) => (
+              <Link
+                key={tool.path}
+                to={tool.path}
+                className={`sidebar-link ${
+                  location.pathname.includes(tool.path) ? "active" : ""
+                }`}
+              >
+                {tool.name}
+              </Link>
+            ))}
+          </aside>
 
-      </div>
+          <main className="workspace-content">
+            <Outlet />
+          </main>
+        </div>
+      )}
     </div>
   );
 }
