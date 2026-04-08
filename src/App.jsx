@@ -1,28 +1,30 @@
 import React from "react";
-import MembershipGate from "./components/MembershipGate";
+import { Outlet, Link } from "react-router-dom";
+import logo from "./images/logo.png";
 
-function App() {
+export default function App() {
   return (
-    <>
-      <MembershipGate />
+    <div className="min-h-screen w-full text-white bg-black relative overflow-x-hidden">
 
-      <main className="min-h-screen bg-gradient-to-br from-black via-slate-900 to-teal-900 text-teal-200 flex flex-col items-center justify-center px-6">
-        <h1 className="text-5xl font-bold mb-6 drop-shadow-[0_0_25px_rgba(45,212,191,0.8)] text-center">
-          Ocean Tide Drop AI Surfer
-        </h1>
+      {/* Global Header with Logo */}
+      <header className="w-full flex items-center justify-between px-6 py-4 bg-black/40 backdrop-blur-md border-b border-teal-500/20 fixed top-0 left-0 z-50">
+        <Link to="/" className="flex items-center gap-3">
+          <img
+            src={logo}
+            alt="Ocean Tide Drop Logo"
+            className="h-12 drop-shadow-[0_0_12px_rgba(45,212,191,0.8)]"
+          />
+          <span className="text-teal-400 font-bold text-xl tracking-wide">
+            Ocean Tide Drop
+          </span>
+        </Link>
+      </header>
 
-        <p className="text-lg text-gray-300 max-w-xl text-center mb-8">
-          Pick your tools as you do.  
-          Navigate the tides.  
-          Build your realm.
-        </p>
-
-        <button className="px-6 py-3 rounded-lg bg-teal-600 hover:bg-teal-500 transition-all text-black font-semibold shadow-[0_0_12px_rgba(45,212,191,0.8)]">
-          Begin Your Journey
-        </button>
+      {/* Page Content Wrapper */}
+      <main className="pt-24 px-4 pb-10 max-w-7xl mx-auto">
+        <Outlet />
       </main>
-    </>
+
+    </div>
   );
 }
-
-export default App;
