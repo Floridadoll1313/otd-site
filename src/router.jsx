@@ -1,32 +1,48 @@
-// src/router.jsx
 import { createBrowserRouter } from "react-router-dom";
+import App from "./App";
 
-// Core app shell
-import App from "./App.jsx";
+// Public pages
+import Home from "./pages/Home";
+import Services from "./pages/Services";
+import Contact from "./pages/Contact";
+import Interaction from "./pages/Interaction";
 
 // Membership system
-import MemberPass from "./components/MemberPass.jsx";
-import MemberPortal from "./components/MemberPortal.jsx";
-import MemberServices from "./components/MemberServices.jsx";
-
-// Other pages (only include the ones you actually have)
-import Home from "./pages/Home.jsx";
-import Services from "./pages/Services.jsx";
-import Contact from "./pages/Contact.jsx";
-import Interaction from "./pages/Interaction.jsx";
+import MemberPass from "./components/MemberPass";
+import MemberPortal from "./components/MemberPortal";
+import MemberServices from "./components/MemberServices";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { index: true, element: <Home /> },
-      { path: "services", element: <Services /> },
-      { path: "contact", element: <Contact /> },
-      { path: "interaction", element: <Interaction /> },
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "services",
+        element: <Services />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "interaction",
+        element: <Interaction />,
+      },
 
-      // Membership system
-      { path: "memberportal", element: <MemberPortal /> },
+      // Membership routes
+      {
+        path: "memberportal",
+        element: (
+          <MemberPass>
+            <MemberPortal />
+          </MemberPass>
+        ),
+      },
       {
         path: "memberservices",
         element: (
