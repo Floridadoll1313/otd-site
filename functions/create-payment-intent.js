@@ -1,19 +1,35 @@
+// functions/create-payment-intent.js
+
 export async function onRequestPost(context) {
   try {
-    const { request, env } = context;
+    // Read Stripe secret key from Cloudflare environment variables
+    const STRIPE_SECRET_KEY = context.env.STRIPE_SECRET_KEY;
 
-    const body = await request.json();
-    const { amount } = body;
-
-    if (!amount) {
+    if (!STRIPE_SECRET_KEY) {
       return new Response(
-        JSON.stringify({ error: "Missing amount" }),
+        JSON.stringify({ error: "Missing STRIPE_SECRET_KEY in environment." }),
+        { status: 500 }
+      );
+    }
+
+    // Stripe must be imported dynamically for Cloudflare compatibility
+    const { Stripe } = await import("stripe");
+    const stripe = new Stripe(STRIPE_SECRET_KEY, {
+      apiVersion: "2023-10-16",
+    });
+
+    // Parse JSON body
+    const body = await context.request.json();
+    const amount = body.amount;
+
+    if (!amount || typeof amount !== "number") {
+      return new Response(
+        JSON.stringify({ error: "Invalid or missing amount." }),
         { status: 400 }
       );
     }
 
-    const stripe = require("stripe")(env.STRIPE_SECRET_KEY);
-
+    // Create the Payment Intent
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: "usd",
@@ -21,7 +37,9 @@ export async function onRequestPost(context) {
     });
 
     return new Response(
-      JSON.stringify({ clientSecret: paymentIntent.client_secret }),
+      JSON.stringify({
+        clientSecret: paymentIntent.client_secret,
+      }),
       {
         headers: { "Content-Type": "application/json" },
         status: 200,
@@ -29,7 +47,9 @@ export async function onRequestPost(context) {
     );
   } catch (err) {
     return new Response(
-      JSON.stringify({ error: err.message }),
+      JSON.stringify({
+        error: err.message || "Unknown server error.",
+      }),
       { status: 500 }
     );
   }
